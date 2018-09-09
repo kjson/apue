@@ -12,7 +12,7 @@ int main(void) {
     int         status;
 
 
-    // List 
+    // Listen to sigints
     if (signal(SIGINT, handler) == SIG_ERR)
         err_sys("Error registering interrupt handler");
 
