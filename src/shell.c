@@ -2,13 +2,22 @@
 #include "apue.h"
 #include <sys/wait.h>
 
+static void handler(int);
+
+const char* prompt = "-> ";
+
 int main(void) {
     char        buf[MAXLINE];
     pid_t       pid;
     int         status;
 
+
+    // List 
+    if (signal(SIGINT, handler) == SIG_ERR)
+        err_sys("Error registering interrupt handler");
+
     while (fgets(buf, MAXLINE, stdin) != NULL) {
-        printf("-> ");
+        printf(prompt);
 
         if (strlen(buf) <= 1)
             continue;
@@ -31,4 +40,10 @@ int main(void) {
     }
 
     exit(0);
+}
+
+
+
+void handler(int signo) {
+    printf("");
 }
