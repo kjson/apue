@@ -18,14 +18,14 @@ int main(void) {
     clock_t     start, diff;
     int         msec;
 
-    remove("Test.in");
-    remove("Test.out");
+    remove("var/Test.in");
+    remove("var/Test.out");
 
-    test_size = rfile("Test.in", TESTSIZE);
+    test_size = rfile("var/Test.in", TESTSIZE);
 
     // Just write to OS page cache.
     start = clock();
-    if ((written = cp("Test.in", "Test.out", O_WRONLY | O_CREAT)) < 0) {
+    if ((written = cp("var/Test.in", "var/Test.out", O_WRONLY | O_CREAT)) < 0) {
         err_sys("CP error");
     }
 
@@ -37,7 +37,7 @@ int main(void) {
 
     // Wait for physical IO to finish.
     start = clock();
-    if ((written = cp("Test.in", "Test.out", O_WRONLY | O_CREAT | O_SYNC)) < 0) {
+    if ((written = cp("var/Test.in", "var/Test.out", O_WRONLY | O_CREAT | O_SYNC)) < 0) {
         err_sys("CP error");
     }
 
@@ -49,7 +49,7 @@ int main(void) {
 
     // Only wait for data to be physically written to dist and not metadata.
     start = clock();
-    if ((written = cp("Test.in", "Test.out", O_WRONLY | O_CREAT | O_DSYNC)) < 0) {
+    if ((written = cp("var/Test.in", "var/Test.out", O_WRONLY | O_CREAT | O_DSYNC)) < 0) {
         err_sys("CP error");
     }
 
